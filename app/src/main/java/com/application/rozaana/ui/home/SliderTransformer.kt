@@ -23,7 +23,7 @@ class SliderTransformer() : ViewPager2.PageTransformer {
 //                page.rotationX = -120*Math.abs(position);
             }
             position <= 1 -> {    // (0,1]
-                page.alpha = 1f;
+                page.alpha = 1f - position;
                 page.translationY = -position*page.height;
                 page.translationZ = -Math.abs(position);
                 val scaleFactor = (MIN_SCALE
