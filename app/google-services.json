@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "868700026330",
+    "project_id": "rozaana-f36d0",
+    "storage_bucket": "rozaana-f36d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868700026330:android:4d069969d6c0a4ff62fce3",
+        "android_client_info": {
+          "package_name": "com.application.rozaana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "868700026330-bv0lb9jtlmsondjjdbn3ae1emql5ajj8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhwwUsIwtv51L_IiYjwbVUdY3INRRBVQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "868700026330-bv0lb9jtlmsondjjdbn3ae1emql5ajj8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
