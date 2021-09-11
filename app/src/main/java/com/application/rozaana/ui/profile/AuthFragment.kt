@@ -9,40 +9,36 @@ import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.application.rozaana.R
 import com.application.rozaana.baseui.ViewPager2Adapter
-import com.application.rozaana.databinding.FragmentProfileBinding
+import com.application.rozaana.databinding.FragmentAuthBinding
 import com.application.rozaana.ui.home.SliderTransformer
+import com.application.rozaana.ui.home.childFragments.MediaFragment
 import com.google.firebase.auth.FirebaseAuth
-import androidx.annotation.NonNull
-import com.application.rozaana.MainActivity
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener
-import android.content.Intent
-import com.testbook.tbapp.prefs.MySharedPreferences
 
-
-class ProfileFragment : Fragment() {
+class AuthFragment : Fragment() {
 
     companion object {
-
         fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
+            AuthFragment().apply {
                 arguments = Bundle().apply {
-
                 }
             }
     }
 
+    private var mAuth: FirebaseAuth? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mAuth = FirebaseAuth.getInstance();
         arguments?.let {
-
         }
     }
 
-    lateinit var binding: FragmentProfileBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    lateinit var binding: FragmentAuthBinding
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auth, container, false)
         return binding.root
     }
 
@@ -63,28 +59,37 @@ class ProfileFragment : Fragment() {
 //        TODO("Not yet implemented")
     }
 
+    lateinit var viewpager2: ViewPager2Adapter
     private fun initViews() {
-        binding.logout.text = "Logout ${MySharedPreferences.username}"
-        initOnClickListeners()
-    }
+        viewpager2 = ViewPager2Adapter(
+            childFragmentManager,
+            lifecycle
+        )
+        getFragments()
+        binding.viewpager.adapter = viewpager2
+        binding.viewpager.offscreenPageLimit = 3
+        binding.viewpager.setPageTransformer(SliderTransformer())
 
-    private fun initOnClickListeners() {
-        val authStateListener =
-            AuthStateListener { firebaseAuth ->
-                if (firebaseAuth.currentUser == null) {
-                    activity?.finish()
-                    startActivity(Intent(this.activity, MainActivity::class.java))
-                }
+
+        binding.viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
             }
-        val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-        firebaseAuth.addAuthStateListener(authStateListener)
-        binding.logout.setOnClickListener {
-            firebaseAuth.signOut()
-        }
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+            }
+        })
     }
 
     private fun getFragments() {
-
+        viewpager2.addFrag(LoginFragment.newInstance())
+        viewpager2.addFrag(RegisterFragment.newInstance())
     }
 
     private fun initAdapters() {
@@ -98,7 +103,4 @@ class ProfileFragment : Fragment() {
     private fun initViewModelObservers() {
 //        TODO("Not yet implemented")
     }
-
-
-
 }
